@@ -11,7 +11,7 @@ function search(){
     blocResultat.innerHTML = " ";
 
     elementrecherche = document.getElementById("zone_recherche").value;
-    elementrecherche = elementrecherche.replace(" ","-");
+    elementrecherche = elementrecherche.replace(/ /g,"-");
     elementrecherche = elementrecherche.toLowerCase();
     elementrecherche = encodeURIComponent(elementrecherche);
     url = proxyUrl+encodeURIComponent(apiUrl+elementrecherche);
