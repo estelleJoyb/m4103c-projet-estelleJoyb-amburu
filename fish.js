@@ -43,7 +43,7 @@ function affiche(i,nom){
     valeur.classList.add(nom);
 }
 function afficheFav(){
-  blocFavResultat.innerHTML = " ";
+  blocFav.innerHTML = " ";
   for(var cookie in cookies){
     var leLi = document.createElement("li");
     blocFav.appendChild(leLi);
