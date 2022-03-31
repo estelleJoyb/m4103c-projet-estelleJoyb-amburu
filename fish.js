@@ -48,6 +48,7 @@ function afficheFav(i){
   valeur.innerHTML = i+" ";
   leLi.appendChild(valeur);
   leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" width=15 title=\"Cliquer pour supprimer le favori\">";
+  valeur.classList.add("poissonFav");
   valeur.title = title="Cliquer pour relancer la recherche";
 }
 
@@ -57,6 +58,7 @@ function afficheImage(i){
   blocResultat.appendChild(valeur);
   valeur.classList.add("image");
 }
+
 
 // loadJSON method to open the JSON file.
 function loadJSON(path, success, error) {
@@ -109,7 +111,6 @@ function loadJSON(path, success, error) {
           etoile.setAttribute('src','images/etoile-vide.svg');
           etoile.setAttribute('alt','Etoile Vide');
           cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                
         }
     }
     if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
