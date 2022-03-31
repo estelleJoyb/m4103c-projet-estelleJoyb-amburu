@@ -7,6 +7,7 @@ var elementrecherche;
 var ilyafav;
 var url;
 var etoile = document.getElementById("etoile");
+var cookies =[];
 
 function search(){
     blocResultat.innerHTML = " ";
@@ -41,15 +42,18 @@ function affiche(i,nom){
     blocResultat.appendChild(valeur);
     valeur.classList.add(nom);
 }
-function afficheFav(i){
-  var leLi = document.createElement("li");
-  blocFav.appendChild(leLi);
-  var valeur = document.createElement("span");
-  valeur.innerHTML = i+" ";
-  leLi.appendChild(valeur);
-  leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" width=15 title=\"Cliquer pour supprimer le favori\">";
-  valeur.classList.add("poissonFav");
-  valeur.title = title="Cliquer pour relancer la recherche";
+function afficheFav(){
+  blocFavResultat.innerHTML = " ";
+  for(var cookie in cookies){
+    var leLi = document.createElement("li");
+    blocFav.appendChild(leLi);
+    var valeur = document.createElement("span");
+    valeur.innerHTML = cookie.nom+" ";
+    leLi.appendChild(valeur);
+    leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" width=15 title=\"Cliquer pour supprimer le favori\">";
+    valeur.classList.add("poissonFav");
+    valeur.title = title="Cliquer pour relancer la recherche";
+  }
 }
 
 function afficheImage(i){
@@ -104,9 +108,10 @@ function loadJSON(path, success, error) {
         if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
           etoile.setAttribute('src','images/etoile-pleine.svg');
           etoile.setAttribute('alt','Etoile Pleine');
-          afficheFav(elementrecherche,"span");
+          afficheFav();
           console.log(url);
           var cookie = setCookie(elementrecherche, url);
+          cookies.push(cookie);
         }else{
           etoile.setAttribute('src','images/etoile-vide.svg');
           etoile.setAttribute('alt','Etoile Vide');
