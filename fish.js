@@ -50,7 +50,7 @@ function afficheFav(){
     var valeur = document.createElement("span");
     valeur.innerHTML = cookie.nom+" ";
     leLi.appendChild(valeur);
-    leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" width=15 title=\"Cliquer pour supprimer le favori\">";
+    leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" onclick=\"suppFav(cookies.nom)\" width=15 title=\"Cliquer pour supprimer le favori\">";
     valeur.classList.add("poissonFav");
     valeur.title = title="Cliquer pour relancer la recherche";
   }
@@ -63,6 +63,9 @@ function afficheImage(i){
   valeur.classList.add("image");
 }
 
+function suppFav(cookie){
+  cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";//on le redéfinie à une date expirée pour le supp
+}
 
 // loadJSON method to open the JSON file.
 function loadJSON(path, success, error) {
