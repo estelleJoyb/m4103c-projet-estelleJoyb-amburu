@@ -15,11 +15,11 @@ function search(){
     loadJSON(url, myData,'jsonp');
 }
 
-function affiche(i){
+function affiche(i,nom){
     var valeur = document.createElement("section");
     valeur.innerHTML = i;
     blocResultat.appendChild(valeur);
-    valeur.classList.add("res");
+    valeur.classList.add(nom);
 }
 function afficheFav(i){
   var leLi = document.createElement("li");
@@ -64,9 +64,9 @@ function loadJSON(path, success, error) {
 
     for(var res of resultat2){
       //if(res["Species Name"] == elementrecherche) {
-        affiche(res["Species Name"]+ " - " + res["Scientific Name"]);
-        affiche("Habitat :" +res["Habitat"]);
-        afficheImage(res["Species Illustration Photo"].src);
+        affiche(res["Species Name"]+ " - " + res["Scientific Name"], "name");
+        affiche("Habitat :" +res["Habitat"], "habitat");
+        afficheImage(res["Species Illustration Photo"].src, "illu");
         
     }
   }

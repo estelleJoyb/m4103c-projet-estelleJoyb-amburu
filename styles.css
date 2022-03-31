@@ -120,6 +120,15 @@ button#btn-favoris {
 	border-radius: 20px;
 	border-color: var(--main-green);
 	margin-top: 20px;
+	display :flex;
+}
+#bloc-resultats>section {
+	margin : 15px;
+}
+
+#bloc-resultats>section.name {
+	font-size: 1.2em;
+
 }
 
 #bloc-resultats p.res::before{
