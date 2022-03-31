@@ -2,7 +2,9 @@ var proxyUrl ="https://api.allorigins.win/get?url=";
 var apiUrl = "https://www.fishwatch.gov/api/species/";
 var Data;
 var blocResultat = document.querySelector('#bloc-resultats');
+var blocFav = document.getElementById("section-favoris");
 var elementrecherche;
+var ilyafav;
 
 function search(){
     elementrecherche = document.getElementById("zone_recherche").value;
@@ -14,21 +16,18 @@ function search(){
 }
 
 function affiche(i){
-    // // crée un nouvel élément div
-    // var newp = document.createElement("p");
-    // // et lui donne un peu de contenu
-    // var newContent = document.createTextNode(i);
-    // // ajoute le nœud texte au nouveau div créé
-    // newp.appendChild(newContent);
-
-    // // ajoute le nouvel élément créé et son contenu dans le DOM
-    // var currentp = document.getElementById('res');
-    // document.getElementById("bloc-resultats").insertBefore(newp, currentp);
-    // newp.classList.add("res");
-    var valeur = document.createElement('section');
+    var valeur = document.createElement("section");
     valeur.innerHTML = i;
     blocResultat.appendChild(valeur);
     valeur.classList.add("res");
+}
+function afficheFav(i){
+  var leLi = document.createElement("li");
+  blocFav.appendChild(leLi);
+  var valeur = document.createElement("span");
+  valeur.innerHTML = i;
+  leLi.appendChild(valeur);
+  valeur.title = title="Cliquer pour relancer la recherche";
 }
 
 function afficheImage(i){
@@ -69,5 +68,19 @@ function loadJSON(path, success, error) {
         affiche("Habitat :" +res["Habitat"]);
         afficheImage(res["Species Illustration Photo"].src);
         
+    }
+  }
+
+  function Fav(){
+    var elem = document.getElementById("etoile");
+    
+    if(elem.getAttribute('src') == "images/etoile-vide.svg"){
+      elem.setAttribute('src','images/etoile-pleine.svg');
+      elem.setAttribute('alt','Etoile Pleine');
+      affiche(elementrecherche.value,"span",)
+
+    }else{
+      elem.setAttribute('src','images/etoile-vide.svg');
+      elem.setAttribute('alt','Etoile Vide');
     }
   }
