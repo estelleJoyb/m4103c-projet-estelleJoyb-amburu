@@ -66,10 +66,9 @@ function loadJSON(path, success, error) {
     for(var res of resultat2){
       //if(res["Species Name"] == elementrecherche) {
         affiche(res["Species Name"]);
-        var images = (res["Image Gallery"]);
-        for(var im of images){
-          afficheImage(im.src);
-        //}
-      }
+        affiche(res["Scientific Name"]);
+        affiche("Habitat :" +res["Habitat"]);
+        afficheImage(res["Species Illustration Photo"].src);
+        
     }
   }
