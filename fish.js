@@ -8,7 +8,9 @@ var ilyafav;
 var url;
 
 function search(){
-    document.getElementsByClassName('#bloc-resultat').innerHTML = " ";
+    var res = document.getElementById('bloc-resultat');
+    res.innerHTML = " ";
+
     elementrecherche = document.getElementById("zone_recherche").value;
     elementrecherche = elementrecherche.replace(" ","-");
     elementrecherche = elementrecherche.toLowerCase();
