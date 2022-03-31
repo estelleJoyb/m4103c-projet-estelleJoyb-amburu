@@ -6,6 +6,7 @@ var blocFav = document.getElementById("liste-favoris");
 var elementrecherche;
 var ilyafav;
 var url;
+var etoile = document.getElementById("etoile");
 
 function search(){
     blocResultat.innerHTML = " ";
@@ -16,6 +17,16 @@ function search(){
     elementrecherche = encodeURIComponent(elementrecherche);
     url = proxyUrl+encodeURIComponent(apiUrl+elementrecherche);
     
+    if(getCookie(elementrecherche)!=""){//alors on l'a en favori
+      if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
+        etoile.setAttribute('src','images/etoile-pleine.svg');
+        etoile.setAttribute('alt','Etoile Pleine');}
+    }else{//pas en favori
+      if(etoile.getAttribute('src') =='images/etoile-pleine.svg'){
+        etoile.setAttribute('src','images/etoile-vide.svg');
+        etoile.setAttribute('alt','Etoile Vide');
+      }
+    }
     loadJSON(url, myData,'jsonp');
 }
 
@@ -84,20 +95,29 @@ function loadJSON(path, success, error) {
   }
 
   function Fav(){
-    var elem = document.getElementById("etoile");
-    
-    if(elem.getAttribute('src') == "images/etoile-vide.svg"){
-      elem.setAttribute('src','images/etoile-pleine.svg');
-      elem.setAttribute('alt','Etoile Pleine');
-      if(elementrecherche == undefined){
+    if(elementrecherche == undefined){
         alert("Vous n'avez pas encore fait de recherche !");
-      }else{
-        afficheFav(elementrecherche,"span");
-        console.log(url);
-        setCookie(elementrecherche, url);
-      }
     }else{
-      elem.setAttribute('src','images/etoile-vide.svg');
-      elem.setAttribute('alt','Etoile Vide');
+        
+        if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
+          etoile.setAttribute('src','images/etoile-pleine.svg');
+          etoile.setAttribute('alt','Etoile Pleine');
+          afficheFav(elementrecherche,"span");
+          console.log(url);
+          var cookie = setCookie(elementrecherche, url);
+        }else{
+          etoile.setAttribute('src','images/etoile-vide.svg');
+          etoile.setAttribute('alt','Etoile Vide');
+          cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                
+        }
+    }
+    if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
+      etoile.setAttribute('src','images/etoile-pleine.svg');
+      etoile.setAttribute('alt','Etoile Pleine');
+    }else{
+      etoile.setAttribute('src','images/etoile-vide.svg');
+      etoile.setAttribute('alt','Etoile Vide');
+            
     }
   }
