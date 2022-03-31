@@ -78,8 +78,11 @@ function loadJSON(path, success, error) {
     if(elem.getAttribute('src') == "images/etoile-vide.svg"){
       elem.setAttribute('src','images/etoile-pleine.svg');
       elem.setAttribute('alt','Etoile Pleine');
-      affiche(elementrecherche.value,"span",)
-
+      if(elementrecherche == undefined){
+        alert("Vous n'avez pas encore fait de recherche !");
+      }else{
+        affiche(elementrecherche,"span",)
+      }
     }else{
       elem.setAttribute('src','images/etoile-vide.svg');
       elem.setAttribute('alt','Etoile Vide');
