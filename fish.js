@@ -8,8 +8,7 @@ var ilyafav;
 var url;
 
 function search(){
-    var res = document.getElementById('bloc-resultat');
-    res.innerHTML = " ";
+    blocResultat.innerHTML = " ";
 
     elementrecherche = document.getElementById("zone_recherche").value;
     elementrecherche = elementrecherche.replace(" ","-");
