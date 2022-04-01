@@ -18,15 +18,10 @@ function search(){
     elementrecherche = encodeURIComponent(elementrecherche);
     url = proxyUrl+encodeURIComponent(apiUrl+elementrecherche);
     
-    if(getCookie(elementrecherche)!=""){//alors on l'a en favori
+    if(localStorage.getItem(elementrecherche)!=null){//alors on l'a en favori
       if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
         etoile.setAttribute('src','images/etoile-pleine.svg');
         etoile.setAttribute('alt','Etoile Pleine');}
-    }else{//pas en favori
-      if(etoile.getAttribute('src') =='images/etoile-pleine.svg'){
-        etoile.setAttribute('src','images/etoile-vide.svg');
-        etoile.setAttribute('alt','Etoile Vide');
-      }
     }
     loadJSON(url, myData,'jsonp');
 }
@@ -48,7 +43,7 @@ function afficheFav(){
     var leLi = document.createElement("li");
     blocFav.appendChild(leLi);
     var valeur = document.createElement("span");
-    valeur.innerHTML = cookie.nom+" ";
+    valeur.innerHTML = localStorage.getItem(cookie)+" ";
     leLi.appendChild(valeur);
     leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" onclick=\"suppFav(cookies.nom)\" width=15 title=\"Cliquer pour supprimer le favori\">";
     valeur.classList.add("poissonFav");
@@ -63,9 +58,6 @@ function afficheImage(i){
   valeur.classList.add("image");
 }
 
-function suppFav(cookie){
-  cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";//on le redéfinie à une date expirée pour le supp
-}
 
 // loadJSON method to open the JSON file.
 function loadJSON(path, success, error) {
@@ -111,22 +103,18 @@ function loadJSON(path, success, error) {
         if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
           etoile.setAttribute('src','images/etoile-pleine.svg');
           etoile.setAttribute('alt','Etoile Pleine');
+          console.log("ajout en favori de " +elementrecherche);
+          var favori = localStorage.setItem(elementrecherche,url);
+          cookies.push(favori);
           afficheFav();
-          console.log(url);
-          var cookie = setCookie(elementrecherche, url);
-          cookies.push(cookie);
         }else{
           etoile.setAttribute('src','images/etoile-vide.svg');
           etoile.setAttribute('alt','Etoile Vide');
-          cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          localStorage.removeItem(elementrecherche);
+          cookies.splice(elementrecherche);
+          console.log("suppression en favori de " +elementrecherche);
+          afficheFav();
         }
     }
-    if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
-      etoile.setAttribute('src','images/etoile-pleine.svg');
-      etoile.setAttribute('alt','Etoile Pleine');
-    }else{
-      etoile.setAttribute('src','images/etoile-vide.svg');
-      etoile.setAttribute('alt','Etoile Vide');
-            
-    }
+  
   }
