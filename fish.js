@@ -8,6 +8,7 @@ var ilyafav;
 var url;
 var etoile = document.getElementById("etoile");
 var cookies = new Array();
+var fav;
 
 function search(id){
     if(id == undefined){
@@ -126,7 +127,7 @@ class Favori {
           etoile.setAttribute('src','images/etoile-pleine.svg');
           etoile.setAttribute('alt','Etoile Pleine');
           console.log("ajout en favori de " +elementrecherche);
-          var fav = new Favori(elementrecherche,url);
+          fav = new Favori(elementrecherche,url);
           localStorage.setItem(elementrecherche,fav);
           var favori = localStorage.getItem(elementrecherche);
           
@@ -140,7 +141,8 @@ class Favori {
           etoile.setAttribute('src','images/etoile-vide.svg');
           etoile.setAttribute('alt','Etoile Vide');
           localStorage.removeItem(elementrecherche);
-          cookies.splice(elementrecherche);
+          //cookies.splice(elementrecherche, 1);
+          cookies.splice(fav,1);
           console.log("suppression en favori de " +elementrecherche);
           afficheFav();
         }
