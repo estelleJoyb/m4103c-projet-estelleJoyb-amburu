@@ -18,15 +18,15 @@ function search(){
     elementrecherche = encodeURIComponent(elementrecherche);
     url = proxyUrl+encodeURIComponent(apiUrl+elementrecherche);
     
-    if(localStorage.getItem(elementrecherche)==url){//alors on l'a en favori
-      if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
-        etoile.setAttribute('src','images/etoile-pleine.svg');
-        etoile.setAttribute('alt','Etoile Pleine');}
-    }else{
-      if(etoile.getAttribute('src') == "images/etoile-pleine.svg"){
-        etoile.setAttribute('src','images/etoile-vide.svg');
-        etoile.setAttribute('alt','Etoile Vide');}
-    }
+    // if(localStorage.getItem(elementrecherche)==url){//alors on l'a en favori
+    //   if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
+    //     etoile.setAttribute('src','images/etoile-pleine.svg');
+    //     etoile.setAttribute('alt','Etoile Pleine');}
+    // }else{
+    //   if(etoile.getAttribute('src') == "images/etoile-pleine.svg"){
+    //     etoile.setAttribute('src','images/etoile-vide.svg');
+    //     etoile.setAttribute('alt','Etoile Vide');}
+    // }
     loadJSON(url, myData,'jsonp');
 }
 
@@ -51,7 +51,7 @@ function afficheFav(){
       var leLi = document.createElement("li");
       blocFav.appendChild(leLi);
       var valeur = document.createElement("span");
-      valeur.innerHTML = cookies[i] +" ";
+      valeur.innerHTML = cookies[i].nom +" ";
       leLi.appendChild(valeur);
       leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" onclick=\"suppFav("+cookies.nom+")\" width=15 title=\"Cliquer pour supprimer le favori\">";
       valeur.classList.add("poissonFav");
@@ -104,6 +104,13 @@ function loadJSON(path, success, error) {
     }
   }
 
+class Favori {
+  constructor(nom, url) {
+    this.nom = nom;
+    this.url = url;
+  }
+}
+
   function Fav(){
     if(elementrecherche == undefined){
         alert("Vous n'avez pas encore fait de recherche !");
@@ -113,9 +120,14 @@ function loadJSON(path, success, error) {
           etoile.setAttribute('src','images/etoile-pleine.svg');
           etoile.setAttribute('alt','Etoile Pleine');
           console.log("ajout en favori de " +elementrecherche);
-          localStorage.setItem(elementrecherche,url);
+          var fav = new Favori(elementrecherche,url);
+          localStorage.setItem(elementrecherche,fav);
           var favori = localStorage.getItem(elementrecherche);
-          cookies.push(favori);
+          
+          
+          cookies.push(fav);
+
+          //cookies.push(favori);
           console.log(cookies);
           afficheFav();
         }else{
