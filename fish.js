@@ -26,10 +26,7 @@ function search(){
     loadJSON(url, myData,'jsonp');
 }
 
-function rechercheByFav(name){
-  var barre = document.getElementById("zone_recherche");
-  barre.value = name;
-}
+
 
 function affiche(i,nom){
     var valeur = document.createElement("section");
@@ -50,7 +47,7 @@ function afficheFav(){
       var leLi = document.createElement("li");
       blocFav.appendChild(leLi);
       var valeur = document.createElement("span");
-      valeur.innerHTML = localStorage.getItem(cookie)+" ";
+      valeur.innerHTML = cookie +" ";
       leLi.appendChild(valeur);
       leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" onclick=\"suppFav("+cookies.nom+")\" width=15 title=\"Cliquer pour supprimer le favori\">";
       valeur.classList.add("poissonFav");
