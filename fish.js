@@ -31,7 +31,7 @@ function search(id){
     // }
     loadJSON(url, myData,'jsonp');
     }else{
-      elementrecherche = id;
+      document.getElementById("zone_recherche").value = id;
       search();
     }
 }
