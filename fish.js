@@ -39,15 +39,22 @@ function affiche(i,nom){
 }
 function afficheFav(){
   blocFav.innerHTML = " ";
-  for(var cookie in cookies){
-    var leLi = document.createElement("li");
-    blocFav.appendChild(leLi);
-    var valeur = document.createElement("span");
-    valeur.innerHTML = localStorage.getItem(cookie)+" ";
-    leLi.appendChild(valeur);
-    leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" onclick=\"suppFav(cookies.nom)\" width=15 title=\"Cliquer pour supprimer le favori\">";
-    valeur.classList.add("poissonFav");
-    valeur.title = title="Cliquer pour relancer la recherche";
+  if(cookies.length == 0){
+    var valeur = document.createElement("p");
+    valeur.innerHTML = "( &empty; Aucune recherche enregistrée )";
+    blocFav.appendChild(valeur);
+    valeur.classList.add("info-vide");
+  }else{
+    for(var cookie in cookies){
+      var leLi = document.createElement("li");
+      blocFav.appendChild(leLi);
+      var valeur = document.createElement("span");
+      valeur.innerHTML = localStorage.getItem(cookie)+" ";
+      leLi.appendChild(valeur);
+      leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" onclick=\"suppFav("+cookies.nom+")\" width=15 title=\"Cliquer pour supprimer le favori\">";
+      valeur.classList.add("poissonFav");
+      valeur.title = title="Cliquer pour relancer la recherche";
+    }
   }
 }
 
