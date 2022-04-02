@@ -43,7 +43,7 @@ function afficheFav(){
     valeur.classList.add("info-vide");
   }else{
     document.getElementById("favori-null").innerHTML = " ";
-    for(var i = 0; i<= cookies.length; i++){
+    for(var i = 0; i< cookies.length; i++){
       var leLi = document.createElement("li");
       blocFav.appendChild(leLi);
       var valeur = document.createElement("span");
