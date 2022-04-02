@@ -57,12 +57,12 @@ function afficheFav(){
       var leLi = document.createElement("li");
       blocFav.appendChild(leLi);
       var valeur = document.createElement("span");
-      valeur.onclick = function(){search(cookies[i].nom)};
       valeur.innerHTML = cookies[i].nom;
       leLi.appendChild(valeur);
       leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" onclick=\"suppFav("+cookies.nom+")\" width=15 title=\"Cliquer pour supprimer le favori\">";
       valeur.classList.add("poissonFav");
       valeur.title = title="Cliquer pour relancer la recherche";
+      valeur.onclick = function(){search(cookies[i].nom)};
     }
   }
 }
