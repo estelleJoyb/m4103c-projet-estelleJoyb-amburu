@@ -18,11 +18,15 @@ function search(){
     elementrecherche = encodeURIComponent(elementrecherche);
     url = proxyUrl+encodeURIComponent(apiUrl+elementrecherche);
     
-    // if(localStorage.getItem(elementrecherche)==url){//alors on l'a en favori
-    //   if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
-    //     etoile.setAttribute('src','images/etoile-pleine.svg');
-    //     etoile.setAttribute('alt','Etoile Pleine');}
-    // }
+    if(localStorage.getItem(elementrecherche)==url){//alors on l'a en favori
+      if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
+        etoile.setAttribute('src','images/etoile-pleine.svg');
+        etoile.setAttribute('alt','Etoile Pleine');}
+    }else{
+      if(etoile.getAttribute('src') == "images/etoile-pleine.svg"){
+        etoile.setAttribute('src','images/etoile-vide.svg');
+        etoile.setAttribute('alt','Etoile Vide');}
+    }
     loadJSON(url, myData,'jsonp');
 }
 
