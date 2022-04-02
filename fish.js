@@ -7,7 +7,7 @@ var elementrecherche;
 var ilyafav;
 var url;
 var etoile = document.getElementById("etoile");
-var cookies =[];
+var cookies = [];
 
 function search(){
     blocResultat.innerHTML = " ";
@@ -112,8 +112,8 @@ function loadJSON(path, success, error) {
           etoile.setAttribute('src','images/etoile-pleine.svg');
           etoile.setAttribute('alt','Etoile Pleine');
           console.log("ajout en favori de " +elementrecherche);
-          var favori = localStorage.setItem(elementrecherche,url);
-          console.log(localStorage.getItem(elementrecherche));
+          localStorage.setItem(elementrecherche,url);
+          var favori = localStorage.getItem(elementrecherche);
           cookies.push(favori);
           console.log(cookies);
           afficheFav();
