@@ -43,11 +43,11 @@ function afficheFav(){
     valeur.classList.add("info-vide");
   }else{
     document.getElementById("favori-null").innerHTML = " ";
-    for(var cookie in cookies){
+    for(var i = 0; i<= cookies.length(); i++){
       var leLi = document.createElement("li");
       blocFav.appendChild(leLi);
       var valeur = document.createElement("span");
-      valeur.innerHTML = cookie +" ";
+      valeur.innerHTML = cookies[i] +" ";
       leLi.appendChild(valeur);
       leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" onclick=\"suppFav("+cookies.nom+")\" width=15 title=\"Cliquer pour supprimer le favori\">";
       valeur.classList.add("poissonFav");
