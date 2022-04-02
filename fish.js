@@ -42,9 +42,10 @@ function afficheFav(){
   if(cookies.length == 0){
     var valeur = document.createElement("p");
     valeur.innerHTML = "( &empty; Aucune recherche enregistrée )";
-    document.getElementById("section-favoris").appendChild(valeur);
+    document.getElementById("favori-null").appendChild(valeur);
     valeur.classList.add("info-vide");
   }else{
+    document.getElementById("favori-null").innerHTML = " ";
     for(var cookie in cookies){
       var leLi = document.createElement("li");
       blocFav.appendChild(leLi);
