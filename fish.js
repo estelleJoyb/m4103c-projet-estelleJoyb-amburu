@@ -115,6 +115,7 @@ function loadJSON(path, success, error) {
           var favori = localStorage.setItem(elementrecherche,url);
           console.log(localStorage.getItem(elementrecherche));
           cookies.push(favori);
+          console.log(cookies[1]);
           afficheFav();
         }else{
           etoile.setAttribute('src','images/etoile-vide.svg');
