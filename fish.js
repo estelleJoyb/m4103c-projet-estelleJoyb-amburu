@@ -7,7 +7,7 @@ var elementrecherche;
 var ilyafav;
 var url;
 var etoile = document.getElementById("etoile");
-var cookies = [];
+var cookies = new Array();
 
 function search(){
     blocResultat.innerHTML = " ";
