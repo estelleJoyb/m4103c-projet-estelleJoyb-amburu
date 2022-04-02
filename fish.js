@@ -9,7 +9,8 @@ var url;
 var etoile = document.getElementById("etoile");
 var cookies = new Array();
 
-function search(){
+function search(id){
+    if(id == undefined){
     blocResultat.innerHTML = " ";
 
     elementrecherche = document.getElementById("zone_recherche").value;
@@ -28,6 +29,10 @@ function search(){
     //     etoile.setAttribute('alt','Etoile Vide');}
     // }
     loadJSON(url, myData,'jsonp');
+    }else{
+      elementrecherche = id;
+      search();
+    }
 }
 
 
@@ -51,7 +56,7 @@ function afficheFav(){
       var leLi = document.createElement("li");
       blocFav.appendChild(leLi);
       var valeur = document.createElement("span");
-      valeur.onclick = function(){console.log("ouiii")};//recherchefav(cookies[i].nom)
+      valeur.onclick = function(){search(cookies[i].nom)};
       valeur.innerHTML = cookies[i].nom;
       leLi.appendChild(valeur);
       leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" onclick=\"suppFav("+cookies.nom+")\" width=15 title=\"Cliquer pour supprimer le favori\">";
@@ -68,9 +73,6 @@ function afficheImage(i){
   valeur.classList.add("image");
 }
 
-function recherchefav(elem){
-  elementrecherche = document.getElementById("zone_recherche").value = elem;
-}
 
 // loadJSON method to open the JSON file.
 function loadJSON(path, success, error) {
