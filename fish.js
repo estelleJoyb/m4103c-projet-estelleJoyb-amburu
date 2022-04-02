@@ -51,7 +51,8 @@ function afficheFav(){
       var leLi = document.createElement("li");
       blocFav.appendChild(leLi);
       var valeur = document.createElement("span");
-      valeur.innerHTML = cookies[i].nom +" ";
+      valeur.onclick = function(){recherchefav(cookies[i].nom)};
+      valeur.innerHTML = cookies[i].nom;
       leLi.appendChild(valeur);
       leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" onclick=\"suppFav("+cookies.nom+")\" width=15 title=\"Cliquer pour supprimer le favori\">";
       valeur.classList.add("poissonFav");
@@ -67,6 +68,9 @@ function afficheImage(i){
   valeur.classList.add("image");
 }
 
+function recherchefav(elem){
+  elementrecherche = document.getElementById("zone_recherche").value = elem;
+}
 
 // loadJSON method to open the JSON file.
 function loadJSON(path, success, error) {
