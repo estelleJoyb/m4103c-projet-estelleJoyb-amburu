@@ -50,7 +50,6 @@ function afficheFav(){
       var leLi = document.createElement("li");
       blocFav.appendChild(leLi);
       var valeur = document.createElement("span");
-      alert(localStorage.getItem(cookie));
       valeur.innerHTML = localStorage.getItem(cookie)+" ";
       leLi.appendChild(valeur);
       leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" onclick=\"suppFav("+cookies.nom+")\" width=15 title=\"Cliquer pour supprimer le favori\">";
@@ -114,7 +113,7 @@ function loadJSON(path, success, error) {
           etoile.setAttribute('alt','Etoile Pleine');
           console.log("ajout en favori de " +elementrecherche);
           var favori = localStorage.setItem(elementrecherche,url);
-          console.log(favori);
+          console.log(localStorage.getItem(elementrecherche));
           cookies.push(favori);
           afficheFav();
         }else{
