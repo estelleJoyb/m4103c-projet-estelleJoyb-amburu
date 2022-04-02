@@ -114,6 +114,7 @@ function loadJSON(path, success, error) {
           etoile.setAttribute('alt','Etoile Pleine');
           console.log("ajout en favori de " +elementrecherche);
           var favori = localStorage.setItem(elementrecherche,url);
+          console.log(favori);
           cookies.push(favori);
           afficheFav();
         }else{
