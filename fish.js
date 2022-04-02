@@ -42,7 +42,7 @@ function afficheFav(){
   if(cookies.length == 0){
     var valeur = document.createElement("p");
     valeur.innerHTML = "( &empty; Aucune recherche enregistrée )";
-    blocFav.appendChild(valeur);
+    document.getElementById("section-favoris").appendChild(valeur);
     valeur.classList.add("info-vide");
   }else{
     for(var cookie in cookies){
