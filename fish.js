@@ -8,10 +8,8 @@ var ilyafav;
 var url;
 var etoile = document.getElementById("etoile");
 var cookies = new Array();
-var fav;
 
-function search(id){
-    if(id == undefined){
+function search(){
     blocResultat.innerHTML = " ";
 
     elementrecherche = document.getElementById("zone_recherche").value;
@@ -20,20 +18,16 @@ function search(id){
     elementrecherche = encodeURIComponent(elementrecherche);
     url = proxyUrl+encodeURIComponent(apiUrl+elementrecherche);
     
-    // if(localStorage.getItem(elementrecherche)==url){//alors on l'a en favori
-    //   if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
-    //     etoile.setAttribute('src','images/etoile-pleine.svg');
-    //     etoile.setAttribute('alt','Etoile Pleine');}
-    // }else{
-    //   if(etoile.getAttribute('src') == "images/etoile-pleine.svg"){
-    //     etoile.setAttribute('src','images/etoile-vide.svg');
-    //     etoile.setAttribute('alt','Etoile Vide');}
-    // }
-    loadJSON(url, myData,'jsonp');
+    if(localStorage.getItem(elementrecherche)==url){//alors on l'a en favori
+      if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
+        etoile.setAttribute('src','images/etoile-pleine.svg');
+        etoile.setAttribute('alt','Etoile Pleine');}
     }else{
-      document.getElementById("zone_recherche").value = id;
-      search();
+      if(etoile.getAttribute('src') == "images/etoile-pleine.svg"){
+        etoile.setAttribute('src','images/etoile-vide.svg');
+        etoile.setAttribute('alt','Etoile Vide');}
     }
+    loadJSON(url, myData,'jsonp');
 }
 
 
@@ -57,12 +51,11 @@ function afficheFav(){
       var leLi = document.createElement("li");
       blocFav.appendChild(leLi);
       var valeur = document.createElement("span");
-      valeur.innerHTML = cookies[i].nom;
+      valeur.innerHTML = cookies[i] +" ";
       leLi.appendChild(valeur);
       leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" onclick=\"suppFav("+cookies.nom+")\" width=15 title=\"Cliquer pour supprimer le favori\">";
       valeur.classList.add("poissonFav");
       valeur.title = title="Cliquer pour relancer la recherche";
-      valeur.onclick = function(){search(cookies[i].nom)};
     }
   }
 }
@@ -111,13 +104,6 @@ function loadJSON(path, success, error) {
     }
   }
 
-class Favori {
-  constructor(nom, url) {
-    this.nom = nom;
-    this.url = url;
-  }
-}
-
   function Fav(){
     if(elementrecherche == undefined){
         alert("Vous n'avez pas encore fait de recherche !");
@@ -127,22 +113,16 @@ class Favori {
           etoile.setAttribute('src','images/etoile-pleine.svg');
           etoile.setAttribute('alt','Etoile Pleine');
           console.log("ajout en favori de " +elementrecherche);
-          fav = new Favori(elementrecherche,url);
-          localStorage.setItem(elementrecherche,fav);
+          localStorage.setItem(elementrecherche,url);
           var favori = localStorage.getItem(elementrecherche);
-          
-          
-          cookies.push(fav);
-
-          //cookies.push(favori);
+          cookies.push(favori);
           console.log(cookies);
           afficheFav();
         }else{
           etoile.setAttribute('src','images/etoile-vide.svg');
           etoile.setAttribute('alt','Etoile Vide');
           localStorage.removeItem(elementrecherche);
-          //cookies.splice(elementrecherche, 1);
-          cookies.splice(fav,1);
+          cookies.splice(elementrecherche);
           console.log("suppression en favori de " +elementrecherche);
           afficheFav();
         }
