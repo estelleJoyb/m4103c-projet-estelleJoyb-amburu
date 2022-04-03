@@ -80,7 +80,6 @@ function loadJSON(path, success, error) {
       etoile.setAttribute('src','images/etoile-pleine.svg');
       etoile.setAttribute('alt','Etoile Pleine');
       listeFav[0] = elementRecherche;
-      localStorage.setItem("listeFav",JSON.stringify(listeFav));
       console.log("if");
 
     } else if (!isFav){
@@ -89,11 +88,9 @@ function loadJSON(path, success, error) {
       etoile.setAttribute('src','images/etoile-pleine.svg');
       etoile.setAttribute('alt','Etoile Pleine');
       listeFav[listeFav.length] = elementRecherche;
-      listeFav = JSON.parse(localStorage.getItem("listeFav"));
       localStorage.setItem("listeFav", JSON.stringify(listeFav));
     } else {
       //si le poisson est déjà favori
-      listeFav = JSON.parse(localStorage.getItem("listeFav"));
       for(i = 0; i < listeFav.length; i++){
         if(elementRecherche == listeFav[i]){
           suppFav(listeFav, listeFav[i]);
@@ -146,6 +143,8 @@ function loadJSON(path, success, error) {
       etoile.setAttribute('alt','Etoile Vide');
       isFav = false;
     }
+
+    
    /*  console.log(elem);
     blocFav.innerHTML = " ";
     localStorage.removeItem(elem); */
