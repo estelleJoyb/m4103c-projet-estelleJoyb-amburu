@@ -1,70 +1,33 @@
 var proxyUrl ="https://api.allorigins.win/get?url=";
 var apiUrl = "https://www.fishwatch.gov/api/species/";
 var Data;
-var blocResultat = document.querySelector('#bloc-resultats');
-var blocFav = document.getElementById("liste-favoris");
-var elementrecherche;
-var ilyafav;
+var elementRecherche;
 var url;
+var blocResultat = document.querySelector('#bloc-resultats');
+var fav = document.querySelector("#btn-favoris");
 var etoile = document.getElementById("etoile");
-var cookies = new Array();
-var fav;
+var blocFav = document.getElementById("liste-favoris");
+var listeFav = new Array();
 
-function search(id){
-    if(id == undefined){
-    blocResultat.innerHTML = " ";
-
-    elementrecherche = document.getElementById("zone_recherche").value;
-    elementrecherche = elementrecherche.replace(/ /g,"-");
-    elementrecherche = elementrecherche.toLowerCase();
-    elementrecherche = encodeURIComponent(elementrecherche);
-    url = proxyUrl+encodeURIComponent(apiUrl+elementrecherche);
-    
-    // if(localStorage.getItem(elementrecherche)==url){//alors on l'a en favori
-    //   if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
-    //     etoile.setAttribute('src','images/etoile-pleine.svg');
-    //     etoile.setAttribute('alt','Etoile Pleine');}
-    // }else{
-    //   if(etoile.getAttribute('src') == "images/etoile-pleine.svg"){
-    //     etoile.setAttribute('src','images/etoile-vide.svg');
-    //     etoile.setAttribute('alt','Etoile Vide');}
-    // }
-    loadJSON(url, myData,'jsonp');
-    }else{
-      document.getElementById("zone_recherche").value = id;
-      search();
-    }
+function onLoad(){
+  fav.onclick=function(){favoris()};
 }
 
-
+function search(){
+    blocResultat.innerHTML = " ";
+    elementRecherche = document.getElementById("zone_recherche").value;
+    elementRecherche = elementRecherche.replace(/ /g,"-");
+    elementRecherche = elementRecherche.toLowerCase();
+    elementRecherche = encodeURIComponent(elementRecherche);
+    url = proxyUrl+encodeURIComponent(apiUrl+elementRecherche);
+    loadJSON(url, myData,'jsonp');
+}
 
 function affiche(i,nom){
     var valeur = document.createElement("section");
     valeur.innerHTML = i;
     blocResultat.appendChild(valeur);
     valeur.classList.add(nom);
-}
-function afficheFav(){
-  blocFav.innerHTML = " ";
-  if(cookies.length == 0){
-    var valeur = document.createElement("p");
-    valeur.innerHTML = "( &empty; Aucune recherche enregistrée )";
-    document.getElementById("favori-null").appendChild(valeur);
-    valeur.classList.add("info-vide");
-  }else{
-    document.getElementById("favori-null").innerHTML = " ";
-    for(var i = 0; i< cookies.length; i++){
-      var leLi = document.createElement("li");
-      blocFav.appendChild(leLi);
-      var valeur = document.createElement("span");
-      valeur.innerHTML = cookies[i].nom;
-      leLi.appendChild(valeur);
-      leLi.innerHTML += "<img src=\"images/croix.svg\" alt=\"Icone pour supprimer le favori\" onclick=\"suppFav("+cookies.nom+")\" width=15 title=\"Cliquer pour supprimer le favori\">";
-      valeur.classList.add("poissonFav");
-      valeur.title = title="Cliquer pour relancer la recherche";
-      valeur.onclick = function(){search(cookies[i].nom)};
-    }
-  }
 }
 
 function afficheImage(i){
@@ -81,7 +44,6 @@ function loadJSON(path, success, error) {
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          console.log(xhr.responseText);
           success(xhr.responseText);
         }
         else {
@@ -93,15 +55,13 @@ function loadJSON(path, success, error) {
     xhr.send();
   }
   
-
-  
   function myData(Data)
   {
     var resultat = JSON.parse(Data);
     var resultat2 = JSON.parse(resultat.contents);
 
     for(var res of resultat2){
-      //if(res["Species Name"] == elementrecherche) {
+      //if(res["Species Name"] == elementRecherche) {
         affiche(res["Species Name"], "name");
         affiche(" - ", "name2");
         affiche(res["Scientific Name"], "name3")
@@ -111,41 +71,80 @@ function loadJSON(path, success, error) {
     }
   }
 
-class Favori {
-  constructor(nom, url) {
-    this.nom = nom;
-    this.url = url;
-  }
-}
 
-  function Fav(){
-    if(elementrecherche == undefined){
-        alert("Vous n'avez pas encore fait de recherche !");
-    }else{
-        
-        if(etoile.getAttribute('src') == "images/etoile-vide.svg"){
-          etoile.setAttribute('src','images/etoile-pleine.svg');
-          etoile.setAttribute('alt','Etoile Pleine');
-          console.log("ajout en favori de " +elementrecherche);
-          fav = new Favori(elementrecherche,url);
-          localStorage.setItem(elementrecherche,fav);
-          var favori = localStorage.getItem(elementrecherche);
-          
-          
-          cookies.push(fav);
-
-          //cookies.push(favori);
-          console.log(cookies);
-          afficheFav();
-        }else{
-          etoile.setAttribute('src','images/etoile-vide.svg');
-          etoile.setAttribute('alt','Etoile Vide');
-          localStorage.removeItem(elementrecherche);
-          //cookies.splice(elementrecherche, 1);
-          cookies.splice(fav,1);
-          console.log("suppression en favori de " +elementrecherche);
-          afficheFav();
-        }
+  function favoris(){
+    if(listeFav.length === 0){
+      //si il n'y a pas de poisson en favoris
+      etoile.setAttribute('src','images/etoile-pleine.svg');
+      etoile.setAttribute('alt','Etoile Pleine');
+      localStorage.setItem(elementRecherche,elementRecherche);
+      console.log("if");
+      listeFav.push(elementRecherche);
+      ajouteFav(elementRecherche);
+    } else if (localStorage.getItem(elementRecherche) == elementRecherche){
+      //si le poisson actuel est déjà en favoris
+      console.log("elseif");
+      console.log(localStorage.getItem(elementRecherche));
+      console.log(elementRecherche);
+      etoile.setAttribute('src','images/etoile-vide.svg');
+      etoile.setAttribute('alt','Etoile Vide');
+      localStorage.removeItem(elementRecherche,elementRecherche);
+      suppFav(elementRecherche);
+      console.log(listeFav);
+    } else {
+      //si il y a déjà des favoris mais pas le poisson actuel
+      console.log("else");
+      etoile.setAttribute('src','images/etoile-pleine.svg');
+      etoile.setAttribute('alt','Etoile Pleine'); 
+      localStorage.setItem(elementRecherche,elementRecherche);
+      listeFav.push(elementRecherche);
+      ajouteFav(elementRecherche);
     }
-  
+  }
+
+  function ajouteFav(elem){
+    if(listeFav.length == 0){
+    //si la liste des favoris est vide
+      var valeur = document.createElement("p");
+      valeur.innerHTML = "( &empty; Aucune recherche enregistrée )";
+      document.getElementById("liste-favoris").appendChild(valeur);
+    } else {
+      for(var i = 0; i< listeFav.length; i++){
+        //Pour chaque élément de listeFav, on crée un élément li poissonLi de classe unFavori
+        var poissonLi = document.createElement("li");
+        poissonLi.classList.add("unFavori");
+
+        //On crée un élément span poissonActuel et une imageCroix de suppression dans chaque li
+        var poissonActuel = document.createElement("span");
+        var imageCroix = document.createElement("img");
+        
+        //On donne leur valeur aux éléments créés
+        poissonActuel.innerHTML = listeFav[i];
+
+        imageCroix.src = "images/croix.svg";
+        imageCroix.alt = "Croix";
+        imageCroix.title = "Cliquez pour supprimer le favori";
+        imageCroix.width = "15";
+        imageCroix.classList.add("croix");
+
+        imageCroix.onclick=function(){suppFav(elem)};
+
+        poissonLi.appendChild(poissonActuel);
+        poissonLi.appendChild(imageCroix);
+        blocFav.appendChild(poissonLi);
+      }
+      }
+    }
+
+  function suppFav(elem){
+    console.log(elem);
+    blocFav.innerHTML = " ";
+    localStorage.removeItem(elem);
+    for(i = 0; i <= listeFav.length; i++){
+      if(listeFav[i]==elem){
+        listeFav = listeFav.slice(i,i+1);
+        etoile.setAttribute('src','images/etoile-vide.svg');
+        etoile.setAttribute('alt','Etoile Vide');
+      }
+    }
   }

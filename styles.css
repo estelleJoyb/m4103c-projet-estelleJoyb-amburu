@@ -203,6 +203,11 @@ button#btn-favoris {
 	color: var(--main-green);
 }
 
+img .croix {
+	margin-left: 5px;
+	background-color: #fafafa;
+}
+
 /* Media-query pour gérer l'affichage sur petit écran */
 @media (max-width: 900px) {
 	#conteneur {
@@ -210,7 +215,7 @@ button#btn-favoris {
 	}
 
 	#section-separation {
-		border-top: 2px dashed rgb(26, 188, 156);
+		border-top: 2px dashed rgb(97, 222, 197);
 		margin: 0 -10px 40px -10px;
 	}
 
