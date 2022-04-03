@@ -3,6 +3,7 @@ var apiUrl = "https://www.fishwatch.gov/api/species/";
 var Data;
 var elementRecherche;
 var url;
+var isFav = false;
 var blocResultat = document.querySelector('#bloc-resultats');
 var fav = document.querySelector("#btn-favoris");
 var etoile = document.getElementById("etoile");
@@ -75,31 +76,31 @@ function loadJSON(path, success, error) {
   function favoris(){
     if(listeFav.length === 0){
       //si il n'y a pas de poisson en favoris
+      isFav = true;
       etoile.setAttribute('src','images/etoile-pleine.svg');
       etoile.setAttribute('alt','Etoile Pleine');
-      localStorage.setItem(elementRecherche,elementRecherche);
+      listeFav[0] = elementRecherche;
+      localStorage.setItem("listeFav",JSON.stringify(listeFav));
       console.log("if");
-      listeFav.push(elementRecherche);
-      ajouteFav(elementRecherche);
-    } else if (localStorage.getItem(elementRecherche) == elementRecherche){
-      //si le poisson actuel est déjà en favoris
-      console.log("elseif");
-      console.log(localStorage.getItem(elementRecherche));
-      console.log(elementRecherche);
-      etoile.setAttribute('src','images/etoile-vide.svg');
-      etoile.setAttribute('alt','Etoile Vide');
-      localStorage.removeItem(elementRecherche,elementRecherche);
-      suppFav(elementRecherche);
-      console.log(listeFav);
-    } else {
+
+    } else if (!isFav){
       //si il y a déjà des favoris mais pas le poisson actuel
-      console.log("else");
+      isFav = true;
       etoile.setAttribute('src','images/etoile-pleine.svg');
-      etoile.setAttribute('alt','Etoile Pleine'); 
-      localStorage.setItem(elementRecherche,elementRecherche);
-      listeFav.push(elementRecherche);
-      ajouteFav(elementRecherche);
+      etoile.setAttribute('alt','Etoile Pleine');
+      listeFav[listeFav.length] = elementRecherche;
+      listeFav = JSON.parse(localStorage.getItem("listeFav"));
+      localStorage.setItem("listeFav", JSON.stringify(listeFav));
+    } else {
+      //si le poisson est déjà favori
+      listeFav = JSON.parse(localStorage.getItem("listeFav"));
+      for(i = 0; i < listeFav.length; i++){
+        if(elementRecherche == listeFav[i]){
+          suppFav(listeFav, listeFav[i]);
+        }
+      }
     }
+    ajouteFav(elementRecherche);
   }
 
   function ajouteFav(elem){
@@ -136,15 +137,23 @@ function loadJSON(path, success, error) {
       }
     }
 
-  function suppFav(elem){
-    console.log(elem);
+  function suppFav(listeFav, index){
+    var isExecuted = confirm("Etes vous certain de vouloir supprimer ce favori ?");
+    if(isExecuted){
+      listeFav.splice(index,1);
+      localStorage.setItem("favoris",JSON.stringify(listeFav));
+      etoile.setAttribute('src','images/etoile-vide.svg');
+      etoile.setAttribute('alt','Etoile Vide');
+      isFav = false;
+    }
+   /*  console.log(elem);
     blocFav.innerHTML = " ";
-    localStorage.removeItem(elem);
-    for(i = 0; i <= listeFav.length; i++){
+    localStorage.removeItem(elem); */
+/*     for(i = 0; i <= listeFav.length; i++){
       if(listeFav[i]==elem){
         listeFav = listeFav.slice(i,i+1);
         etoile.setAttribute('src','images/etoile-vide.svg');
         etoile.setAttribute('alt','Etoile Vide');
       }
-    }
+    } */
   }
