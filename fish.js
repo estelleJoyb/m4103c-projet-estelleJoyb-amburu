@@ -114,6 +114,7 @@ function loadJSON(path, success, error) {
       valeur.innerHTML = "( &empty; Aucune recherche enregistrée )";
       document.getElementById("liste-favoris").appendChild(valeur);
     } else {
+      blocFav.innerHTML = " ";
         for(var i = 0; i < listeFav.length; i++){
             //Pour chaque élément de listeFav, on crée un élément li poissonLi de classe unFavori
             poissonLi = document.createElement("li");
@@ -125,7 +126,11 @@ function loadJSON(path, success, error) {
             
             //On donne leur valeur aux éléments créés
             poissonActuel.innerHTML = listeFav[i];
-
+            const contenuspan = new String(listeFav[i]);
+            poissonActuel.onclick=function(){
+              console.log(contenuspan);
+              recherchebyfav(contenuspan);
+            }
             imageCroix.src = "images/croix.svg";
             imageCroix.alt = "Croix";
             imageCroix.title = "Cliquez pour supprimer le favori";
@@ -143,6 +148,21 @@ function loadJSON(path, success, error) {
         }
       }
     }
+
+  function recherchebyfav(elem){
+    elementRecherche = document.getElementById("zone_recherche").value = elem;
+    url = proxyUrl+encodeURIComponent(apiUrl+elementRecherche);
+    loadJSON(url, myData,'jsonp');
+    for(i = 0; i < listeFav.length; i++){
+      if(elementRecherche != listeFav[i]){
+        etoile.setAttribute('src','images/etoile-vide.svg');
+        etoile.setAttribute('alt','Etoile Vide');
+      }
+    }
+    if(blocResultat != null){
+      blocResultat.innerHTML = " ";
+    }
+  }
 
   function suppFav(elem){
     localStorage.removeItem(elem);
