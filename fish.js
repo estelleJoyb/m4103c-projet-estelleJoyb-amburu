@@ -8,19 +8,28 @@ var fav = document.querySelector("#btn-favoris");
 var etoile = document.getElementById("etoile");
 var blocFav = document.getElementById("liste-favoris");
 var listeFav = new Array();
+var poissonLi;
 
 function onLoad(){
   fav.onclick=function(){favoris()};
 }
 
 function search(){
-    blocResultat.innerHTML = " ";
     elementRecherche = document.getElementById("zone_recherche").value;
     elementRecherche = elementRecherche.replace(/ /g,"-");
     elementRecherche = elementRecherche.toLowerCase();
     elementRecherche = encodeURIComponent(elementRecherche);
     url = proxyUrl+encodeURIComponent(apiUrl+elementRecherche);
     loadJSON(url, myData,'jsonp');
+    for(i = 0; i < listeFav.length; i++){
+      if(elementRecherche != listeFav[i]){
+        etoile.setAttribute('src','images/etoile-vide.svg');
+        etoile.setAttribute('alt','Etoile Vide');
+      }
+    }
+    if(blocResultat != null){
+      blocResultat.innerHTML = " ";
+    }
 }
 
 function affiche(i,nom){
@@ -80,22 +89,16 @@ function loadJSON(path, success, error) {
       etoile.setAttribute('src','images/etoile-pleine.svg');
       etoile.setAttribute('alt','Etoile Pleine');
       localStorage.setItem(elementRecherche,elementRecherche);
-      console.log("if");
-      listeFav.push(elementRecherche);
+      listeFav[0] = elementRecherche;
       ajouteFav(elementRecherche);
     } else if (localStorage.getItem(elementRecherche) == elementRecherche){
       //si le poisson actuel est déjà en favoris
-      console.log("elseif");
-      console.log(localStorage.getItem(elementRecherche));
-      console.log(elementRecherche);
       etoile.setAttribute('src','images/etoile-vide.svg');
       etoile.setAttribute('alt','Etoile Vide');
       localStorage.removeItem(elementRecherche,elementRecherche);
       suppFav(elementRecherche);
-      console.log(listeFav);
     } else {
       //si il y a déjà des favoris mais pas le poisson actuel
-      console.log("else");
       etoile.setAttribute('src','images/etoile-pleine.svg');
       etoile.setAttribute('alt','Etoile Pleine'); 
       localStorage.setItem(elementRecherche,elementRecherche);
@@ -111,42 +114,45 @@ function loadJSON(path, success, error) {
       valeur.innerHTML = "( &empty; Aucune recherche enregistrée )";
       document.getElementById("liste-favoris").appendChild(valeur);
     } else {
-      for(var i = 0; i< listeFav.length; i++){
-        //Pour chaque élément de listeFav, on crée un élément li poissonLi de classe unFavori
-        var poissonLi = document.createElement("li");
-        poissonLi.classList.add("unFavori");
+        for(var i = 0; i < listeFav.length; i++){
+            //Pour chaque élément de listeFav, on crée un élément li poissonLi de classe unFavori
+            poissonLi = document.createElement("li");
+            poissonLi.classList.add("unFavori");
 
-        //On crée un élément span poissonActuel et une imageCroix de suppression dans chaque li
-        var poissonActuel = document.createElement("span");
-        var imageCroix = document.createElement("img");
-        
-        //On donne leur valeur aux éléments créés
-        poissonActuel.innerHTML = listeFav[i];
+            //On crée un élément span poissonActuel et une imageCroix de suppression dans chaque li
+            var poissonActuel = document.createElement("span");
+            var imageCroix = document.createElement("img");
+            
+            //On donne leur valeur aux éléments créés
+            poissonActuel.innerHTML = listeFav[i];
 
-        imageCroix.src = "images/croix.svg";
-        imageCroix.alt = "Croix";
-        imageCroix.title = "Cliquez pour supprimer le favori";
-        imageCroix.width = "15";
-        imageCroix.classList.add("croix");
+            imageCroix.src = "images/croix.svg";
+            imageCroix.alt = "Croix";
+            imageCroix.title = "Cliquez pour supprimer le favori";
+            imageCroix.width = "15";
+            imageCroix.classList.add("croix");
 
-        imageCroix.onclick=function(){suppFav(elem)};
+            imageCroix.onclick=function(){
+              poissonLi.remove();
+              suppFav(elem)
+            };
 
-        poissonLi.appendChild(poissonActuel);
-        poissonLi.appendChild(imageCroix);
-        blocFav.appendChild(poissonLi);
-      }
+            poissonLi.appendChild(poissonActuel);
+            poissonLi.appendChild(imageCroix);
+            blocFav.appendChild(poissonLi);
+        }
       }
     }
 
   function suppFav(elem){
-    console.log(elem);
-    blocFav.innerHTML = " ";
     localStorage.removeItem(elem);
     for(i = 0; i <= listeFav.length; i++){
       if(listeFav[i]==elem){
-        listeFav = listeFav.slice(i,i+1);
+        listeFav.splice(i,1);
+        poissonLi.remove();
         etoile.setAttribute('src','images/etoile-vide.svg');
         etoile.setAttribute('alt','Etoile Vide');
       }
     }
   }
+
