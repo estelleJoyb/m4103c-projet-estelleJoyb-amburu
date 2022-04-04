@@ -70,8 +70,10 @@ function loadJSON(path, success, error) {
         
     }
   }
+//D'après Lori :
+//faire fichier JSON ou on stok array
 
-
+//localStorage.setItem("favori",stringify(objJSON))
   function favoris(){
     if(listeFav.length === 0){
       //si il n'y a pas de poisson en favoris
