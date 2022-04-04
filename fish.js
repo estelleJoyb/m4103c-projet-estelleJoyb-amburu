@@ -126,7 +126,7 @@ function loadJSON(path, success, error) {
             
             //On donne leur valeur aux éléments créés
             poissonActuel.innerHTML = listeFav[i];
-            const contenuspan = new String(listeFav[i]);
+            const contenuspan = new String(listeFav[i]);//const car sinon ça prends toujours la dernière valeur de listFav
             poissonActuel.onclick=function(){
               console.log(contenuspan);
               recherchebyfav(contenuspan);
@@ -139,7 +139,7 @@ function loadJSON(path, success, error) {
 
             imageCroix.onclick=function(){
               poissonLi.remove();
-              suppFav(elem)
+              suppFav(contenuspan);
             };
 
             poissonLi.appendChild(poissonActuel);
