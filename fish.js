@@ -81,21 +81,6 @@ function search(id){
   }
 }
 
-function affiche(i,nom){
-    var valeur = document.createElement("section");
-    valeur.innerHTML = i;
-    blocResultat.appendChild(valeur);
-    valeur.classList.add(nom);
-}
-
-function afficheImage(i){
-  var valeur = document.createElement('section');
-  valeur.innerHTML = "<img src="+i+">";
-  blocResultat.appendChild(valeur);
-  valeur.classList.add("image");
-}
-
-
 // loadJSON method to open the JSON file.
 function loadJSON(path, success, error) {
     var xhr = new XMLHttpRequest();
@@ -113,19 +98,44 @@ function loadJSON(path, success, error) {
     xhr.send();
   }
   
+  //gestion d'affichage des résultats
   function myData(Data)
   {
     var resultat = JSON.parse(Data);
     var resultat2 = JSON.parse(resultat.contents);
 
     for(var res of resultat2){
-      //if(res["Species Name"] == elementRecherche) {
-        affiche(res["Species Name"], "name");
-        affiche(" - ", "name2");
-        affiche(res["Scientific Name"], "name3")
-        affiche("Habitat :" +res["Habitat"], "habitat");
-        afficheImage(res["Species Illustration Photo"].src, "illu");
-        
+
+        var sectionResultat = document.createElement("section");
+        sectionResultat.classList.add("conteneur_resultats"); 
+
+        var nom = document.createElement("span");
+        nom.innerHTML = res["Species Name"]+" - "+res["Scientific Name"]+"<br></br>";
+        sectionResultat.appendChild(nom);
+
+        var habitatImage = document.createElement("section");
+        habitatImage.classList.add("section_habitat_image");
+ 
+        if(res["Habitat"] == null){
+          var habitatVide = document.createElement("span");
+          habitatVide.innerHTML = "Il n'y a pas d'informations sur l'habitat de ce poisson.";
+          habitatImage.appendChild(habitatVide);
+        } else {
+          var habitat = document.createElement("span");
+          habitat.innerHTML = "Habitat :" +res["Habitat"], "habitat";
+          habitatImage.appendChild(habitat);
+        }
+        if(res["Species Illustration Photo"] == null){
+          var imageVide = document.createElement("p");
+          imageVide.innerHTML = "L'image n'est pas disponible.";
+          habitatImage.appendChild(imageVide);
+        } else {
+          var image = document.createElement("img");
+          image.src = res["Species Illustration Photo"].src;
+          habitatImage.appendChild(image);
+        } 
+        sectionResultat.appendChild(habitatImage);
+        blocResultat.appendChild(sectionResultat); 
     }
   }
 

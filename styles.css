@@ -6,7 +6,7 @@
 	--text-color : #fafafa; /* Texte presque blanc */
 	/* --background: ; Fond bleu foncé */
 	--main-green: rgb(0, 49, 82);
-	--active-green: rgb(2, 100, 180);
+	--active-green: rgb(67, 112, 143);
 }
 
 * {
@@ -122,39 +122,53 @@ button#btn-favoris {
 }
 
 #bloc-resultats {
-	background-color: rgb(0, 64, 104);
+	background-color: transparent;
 	border-style: none;
 	border-radius: 20px;
 	margin-top: 20px;
 	display :flex;
 	flex-wrap: wrap;
 }
+
 #bloc-resultats>section {
 	margin : 15px;
 }
 
 #bloc-resultats>section.name {
 	font-size: 1.2em;
-	flex: 0 0 7%;
 }
 #bloc-resultats>section.name2 {
 	font-size: 1.2em;
-	flex: 0 0 1%;
 }
 
 #bloc-resultats>section.name3 {
 	font-size: 1.2em;
 	font-style: italic;
-	flex: 0 0 80%;
 }
 
-#bloc-resultats>section.habitat{
-	flex: 0 0 50%;
+#bloc-resultats .conteneur_resultats {
+	flex : 100%;
+	padding : 20px;
+	border-style: none;
+	border-radius: 20px;
+	background-color: rgb(0, 49, 82);
 }
 
-#bloc-resultats>section.image{
-	flex: 0 0 30%;
-	background-color: #fafafa;
+#bloc-resultats .conteneur_resultats .section_habitat_image {
+	display : flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+#bloc-resultats .conteneur_resultats .section_habitat_image img {
+	margin-right: 60px;
+	margin-bottom: 30px;
+}
+
+#bloc-resultats .conteneur_resultats img{
+	background-color: rgb(108, 178, 206);
+	border-radius: 20px;
+	width : 25em;
 }
 
 #bloc-resultats p.res::before{
