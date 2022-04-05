@@ -20,6 +20,7 @@ function onLoad(){
   afficheFavoris();
   var zoneRecherche = document.getElementById("zone_recherche");
   zoneRecherche.addEventListener('keyup', function() {majEtoile(this.value)});
+  zoneRecherche.addEventListener('keyup', function(event){if (event.keyCode === 13){search();}})
 }
 
 function majEtoile(elem){
@@ -211,15 +212,17 @@ function loadJSON(path, success, error) {
   function suppFav(elem){
     elem = elem.toString();
     var index = listeFav.indexOf(elem);
-    if(index != -1){
-      listeFav.splice(index,1);
-      localStorage.setItem('favoris', JSON.stringify(listeFav));
-      afficheFavoris();
-    }
-    if(document.getElementById("zone_recherche").value == elem){
-      etoile.setAttribute('src','images/etoile-vide.svg');
-      etoile.setAttribute('alt','Etoile Vide');
-    
+    var isExecuted = confirm("Etes-vous certains de vouloir supprimer ce poisson de vos favoris ?");
+    if(isExecuted){
+      if(index != -1){
+        listeFav.splice(index,1);
+        localStorage.setItem('favoris', JSON.stringify(listeFav));
+        afficheFavoris();
+      }
+      if(document.getElementById("zone_recherche").value == elem){
+        etoile.setAttribute('src','images/etoile-vide.svg');
+        etoile.setAttribute('alt','Etoile Vide');
+      }
     }
   }
 

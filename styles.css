@@ -13,7 +13,7 @@
 	color: var(--text-color) ;
 }
 html {
-	background-image: linear-gradient(to bottom, rgb(132, 220, 255), rgb(2, 68, 112));
+	background-image: linear-gradient(to bottom, rgb(69, 187, 233), rgb(2, 68, 112));
 	height:100%;
 }
 
