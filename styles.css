@@ -162,7 +162,9 @@ button#btn-favoris {
 
 #bloc-resultats .conteneur_resultats .section_habitat_image img {
 	margin-right: 60px;
-	margin-bottom: 30px;
+	margin-bottom: 50px;
+	margin-left: 30px;
+	padding : 10px;
 }
 
 #bloc-resultats .conteneur_resultats img{
