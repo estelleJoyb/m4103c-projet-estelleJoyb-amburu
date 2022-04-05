@@ -43,19 +43,15 @@ function majEtoile(elem){
   }
 }
 
-function search(){
+function search(id){
+  if(id == undefined){
     elementRecherche = document.getElementById("zone_recherche").value;
     elementRecherche = elementRecherche.replace(/ /g,"-");
     elementRecherche = elementRecherche.toLowerCase();
     elementRecherche = encodeURIComponent(elementRecherche);
     url = proxyUrl+encodeURIComponent(apiUrl+elementRecherche);
     loadJSON(url, myData,'jsonp');
-    // for(i = 0; i < listeFav.length; i++){
-    //   if(elementRecherche != listeFav[i]){
-    //     etoile.setAttribute('src','images/etoile-vide.svg');
-    //     etoile.setAttribute('alt','Etoile Vide');
-    //   }
-    // }
+
     if(listeFav.indexOf(elementRecherche) != -1){
       etoile.setAttribute('src','images/etoile-pleine.svg');
       etoile.setAttribute('alt','Etoile Pleine');
@@ -66,6 +62,23 @@ function search(){
     if(blocResultat != null){
       blocResultat.innerHTML = " ";
     }
+  } else {
+    elementRecherche = document.getElementById("zone_recherche").value = id;
+    elementRecherche = encodeURIComponent(elementRecherche);
+    url = proxyUrl+encodeURIComponent(apiUrl+elementRecherche);
+    loadJSON(url, myData,'jsonp');
+
+    if(listeFav.indexOf(elementRecherche) != -1){
+      etoile.setAttribute('src','images/etoile-pleine.svg');
+      etoile.setAttribute('alt','Etoile Pleine');
+    } else {
+      etoile.setAttribute('src','images/etoile-vide.svg');
+      etoile.setAttribute('alt','Etoile Vide');
+    }
+    if(blocResultat != null){
+      blocResultat.innerHTML = " ";
+    }
+  }
 }
 
 function affiche(i,nom){
@@ -149,6 +162,7 @@ function loadJSON(path, success, error) {
   function afficheFavoris(){
     if(listeFav.length == 0){
     //si la liste des favoris est vide
+      blocFav.innerHTML = " ";
       var valeur = document.createElement("p");
       valeur.innerHTML = "( &empty; Aucune recherche enregistrée )";
       document.getElementById("liste-favoris").appendChild(valeur);
@@ -167,7 +181,7 @@ function loadJSON(path, success, error) {
             poissonActuel.innerHTML = listeFav[i];
             const contenuspan = new String(listeFav[i]);//const car sinon ça prends toujours la dernière valeur de listFav
             poissonActuel.onclick=function(){
-              recherchebyfav(contenuspan);
+              search(contenuspan);
             }
             imageCroix.src = "images/croix.svg";
             imageCroix.alt = "Croix";
@@ -184,39 +198,7 @@ function loadJSON(path, success, error) {
       }
     }
 
-  function recherchebyfav(elem){
-    elementRecherche = document.getElementById("zone_recherche").value = elem;
-    url = proxyUrl+encodeURIComponent(apiUrl+elementRecherche);
-    loadJSON(url, myData,'jsonp');
-    
-    for(i = 0; i < listeFav.length; i++){
-      if(elementRecherche != listeFav[i]){
-        etoile.setAttribute('src','images/etoile-vide.svg');
-        etoile.setAttribute('alt','Etoile Vide');
-      }
-    }
-    if(listeFav.indexOf(elementRecherche) != -1){
-      etoile.setAttribute('src','images/etoile-pleine.svg');
-      etoile.setAttribute('alt','Etoile Pleine');
-    } else {
-      etoile.setAttribute('src','images/etoile-vide.svg');
-      etoile.setAttribute('alt','Etoile Vide');
-    }
-    if(blocResultat != null){
-      blocResultat.innerHTML = " ";
-    }
-  }
-
   function suppFav(elem){
-    // localStorage.removeItem(elem);
-    // for(i = 0; i <= listeFav.length; i++){
-    //   if(listeFav[i]==elem){
-    //     
-    //     poisson.remove();
-    //     etoile.setAttribute('src','images/etoile-vide.svg');
-    //     etoile.setAttribute('alt','Etoile Vide');
-    //   }
-    // }
     elem = elem.toString();
     var index = listeFav.indexOf(elem);
     if(index != -1){
