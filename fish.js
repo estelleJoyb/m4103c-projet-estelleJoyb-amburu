@@ -216,5 +216,10 @@ function loadJSON(path, success, error) {
       localStorage.setItem('favoris', JSON.stringify(listeFav));
       afficheFavoris();
     }
+    if(document.getElementById("zone_recherche").value == elem){
+      etoile.setAttribute('src','images/etoile-vide.svg');
+      etoile.setAttribute('alt','Etoile Vide');
+    
+    }
   }
 
